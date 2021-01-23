@@ -3,6 +3,10 @@ package com.tf.lite.evoting.detection;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,14 +39,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void v() {
+        showDialog();
         RequestQueue requestQueue = Volley.newRequestQueue(MainActivity.this);
         String url = "https://onlinevotingdipta.000webhostapp.com/api.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
+            hideDialog();
             Log.d(TAG, "onCreate: " + response);
             getSharedPreferences("app", MODE_PRIVATE).edit().putString("user", response).apply();
             startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
         },
                 error -> {
+                    hideDialog();
                     Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show();
                 }) {
             @Override
@@ -58,5 +65,20 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         requestQueue.add(stringRequest);
+    }
+    public void showDialog(){
+        binding.progressDialog.setVisibility(View.VISIBLE);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                binding.progressImage.animate().rotationBy(360).withEndAction(this).setDuration(1500).setInterpolator(new LinearInterpolator()).start();
+            }
+        };
+
+        binding.progressImage.animate().rotationBy(360).withEndAction(runnable).setDuration(1500).setInterpolator(new LinearInterpolator()).start();
+    }
+    public void hideDialog(){
+        binding.progressDialog.setVisibility(View.GONE);
+        binding.progressImage.clearAnimation();
     }
 }
