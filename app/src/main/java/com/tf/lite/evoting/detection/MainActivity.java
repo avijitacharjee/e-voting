@@ -32,9 +32,6 @@ public class MainActivity extends AppCompatActivity {
         binding.adminLogin.setOnClickListener(v -> {
             startActivity(new Intent(this, AdminLoginActivity.class));
         });
-        binding.camera.setOnClickListener(v -> {
-            startActivity(new Intent(this, DetectorActivity.class));
-        });
     }
 
     public void v() {
