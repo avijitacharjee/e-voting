@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:elevation="10dp"
+    android:orientation="vertical"
+    android:outlineProvider="bounds"
+    android:padding="20dp"
+    tools:context=".DashboardActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
+            android:padding="@dimen/dashboard_padding"
+            android:text="Name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dashboard_text" />
+
+        <TextView
+            android:id="@+id/name_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
+            android:padding="@dimen/dashboard_padding"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dashboard_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
+            android:padding="@dimen/dashboard_padding"
+            android:text="Father's name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dashboard_text" />
+
+        <TextView
+            android:id="@+id/fathers_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
+            android:padding="@dimen/dashboard_padding"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dashboard_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
+            android:padding="@dimen/dashboard_padding"
+            android:text="Mother's name"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dashboard_text" />
+
+        <TextView
+            android:id="@+id/mothers_name_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
+            android:padding="@dimen/dashboard_padding"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dashboard_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
+            android:padding="@dimen/dashboard_padding"
+            android:text="Present address"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dashboard_text" />
+
+        <TextView
+            android:id="@+id/present_address_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
+            android:padding="@dimen/dashboard_padding"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dashboard_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
+            android:padding="@dimen/dashboard_padding"
+            android:text="Permanent Address"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dashboard_text" />
+
+        <TextView
+            android:id="@+id/perma_address_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
+            android:padding="@dimen/dashboard_padding"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dashboard_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
+            android:padding="@dimen/dashboard_padding"
+            android:text="NID no"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dashboard_text" />
+
+        <TextView
+            android:id="@+id/nid_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
+            android:padding="@dimen/dashboard_padding"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dashboard_text" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="10"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
+            android:padding="@dimen/dashboard_padding"
+            android:text="Driving Licence"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dashboard_text" />
+
+        <TextView
+            android:id="@+id/licence_text_view"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_weight="5"
+            android:padding="@dimen/dashboard_padding"
+            android:textColor="@color/black"
+            android:textSize="@dimen/dashboard_text" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/candidate_info_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:layout_margin="20dp"
+        android:background="#E0E0E0"
+        android:fontFamily="cursive"
+        android:padding="10dp"
+        android:text="Candidate info"
+        android:textColor="@color/black"
+        android:textSize="19sp"
+        android:textStyle="bold" />
+</LinearLayout>

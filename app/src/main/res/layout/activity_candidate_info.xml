@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".CandidateInfoActivity">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="cursive"
+        android:gravity="center"
+        android:background="@color/white"
+        android:elevation="5dp"
+        android:outlineProvider="bounds"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:text="Candidates info"
+        android:textColor="@color/black"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:padding="10dp"
+        android:elevation="3dp"
+        android:outlineProvider="bounds"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:orientation="vertical"
+        android:layout_marginRight="20dp"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="10"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/ic_obama"
+                />
+            <TextView
+                android:text="  Barak Obama"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/obama_count"
+                android:text="0"
+                android:gravity="center"
+                android:layout_gravity="end"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <ImageView
+                android:layout_gravity="end"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:src="@mipmap/ic_launcher_round"
+                />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/ic_trump"
+                />
+            <TextView
+                android:text="  Donult trump"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:padding="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:id="@+id/trump_count"
+                android:text="0"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:padding="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
+            <ImageView
+                android:layout_gravity="end"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:src="@mipmap/ic_launcher_round"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginBottom="20dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@mipmap/ic_biden" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="  Joe Biden      "
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/biden_count"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:padding="5dp"
+                android:text="0"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
+
+            <ImageView
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="end"
+                android:src="@mipmap/ic_launcher_round" />
+        </LinearLayout>
+    </LinearLayout>
+    <Spinner
+        android:id="@+id/spinner"
+        android:background="@color/blackLight"
+        android:padding="6dp"
+        android:foregroundTint="@color/white"
+        android:spinnerMode="dropdown"
+        android:dropDownSelector="@color/white"
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:id="@+id/submit"
+        android:text="submit"
+        android:textColor="@color/black"
+        android:padding="10dp"
+        android:layout_gravity="end"
+        android:textSize="20sp"
+        android:background="#E0E0E0"
+        android:layout_margin="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
