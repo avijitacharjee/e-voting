@@ -187,11 +187,12 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                             TF_OD_API_LABELS_FILE,
                             TF_OD_API_INPUT_SIZE,
                             TF_OD_API_IS_QUANTIZED);
-            /*classifier.registerregister("bolod",
+            classifier.register("bolod",
                     new Gson().fromJson(getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE).
-                                    getString("face",""),
+                                    getString("face", ""),
                             SimilarityClassifier.Recognition.class
-                    ));*/
+                    )
+            );
             //cropSize = TF_OD_API_INPUT_SIZE;
         } catch (final IOException e) {
             e.printStackTrace();
@@ -412,14 +413,9 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                 }
                 // TODO register
                 //classifier.register(name, rec);
-                getSharedPreferences(Constants.SHARED_PREFERENCES_NAME,MODE_PRIVATE).edit().putString("face",new Gson().toJson(rec)).commit();
+                getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE).edit().putString("face", new Gson().toJson(rec)).commit();
                 //knownFaces.put(name, rec);
-                classifier.register("bolod",
-                        new Gson().fromJson(getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE).
-                                        getString("face",""),
-                                SimilarityClassifier.Recognition.class
-                        )
-                );
+
                 dlg.dismiss();
             }
         });
@@ -553,10 +549,10 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                     SimilarityClassifier.Recognition result = resultsAux.get(0);
 
                     extra = result.getExtra();
-        //          Object extra = result.getExtra();
-        //          if (extra != null) {
-        //            LOGGER.i("embeeding retrieved " + extra.toString());
-        //          }
+                    //          Object extra = result.getExtra();
+                    //          if (extra != null) {
+                    //            LOGGER.i("embeeding retrieved " + extra.toString());
+                    //          }
 
                     float conf = result.getDistance();
                     if (conf < 1.0f) {

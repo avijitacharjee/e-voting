@@ -20,7 +20,9 @@ import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.RectF;
 import android.os.Trace;
+import android.util.Log;
 import android.util.Pair;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -50,6 +52,7 @@ import com.tf.lite.evoting.detection.env.Logger;
  */
 public class TFLiteObjectDetectionAPIModel
         implements SimilarityClassifier {
+  private static final String TAG = "TFLiteObjectDetectionAP";
 
   private static final Logger LOGGER = new Logger();
 
@@ -175,7 +178,17 @@ public class TFLiteObjectDetectionAPIModel
     Pair<String, Float> ret = null;
     for (Map.Entry<String, Recognition> entry : registered.entrySet()) {
         final String name = entry.getKey();
-        final float[] knownEmb = ((float[][]) entry.getValue().getExtra())[0];
+        float[] knownEmb ;
+        try {
+          knownEmb =((float[][]) entry.getValue().getExtra())[0];
+        }catch (Exception e){
+          Log.d(TAG, " : "+e.toString());
+          ArrayList<Double> arrayList = ((ArrayList<ArrayList<Double>>)entry.getValue().getExtra()).get(0);
+          knownEmb = new float[arrayList.size()];
+          for (int i=0;i<arrayList.size();i++){
+            knownEmb[i]= Float.valueOf(arrayList.get(i)+"");
+          }
+        }
 
         float distance = 0;
         for (int i = 0; i < emb.length; i++) {
