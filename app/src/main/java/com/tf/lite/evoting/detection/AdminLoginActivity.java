@@ -2,6 +2,7 @@ package com.tf.lite.evoting.detection;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +19,9 @@ public class AdminLoginActivity extends AppCompatActivity {
         binding.submitButton.setOnClickListener(v->{
             if(binding.nidEditText.getText().toString().equals("admin")){
                 startActivity(new Intent(this,AdminActivity.class));
+            }
+            else{
+                Toast.makeText(this,"Wrong password",Toast.LENGTH_LONG).show();
             }
         });
     }
