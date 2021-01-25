@@ -45,8 +45,9 @@ public class MainActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
             hideDialog();
             Log.d(TAG, "onCreate: " + response);
-            getSharedPreferences("app", MODE_PRIVATE).edit().putString("user", response).apply();
-            startActivity(new Intent(getApplicationContext(), DashboardActivity.class));
+            getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE).edit().putString("user", response).apply();
+            getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE).edit().putBoolean("add_face", false).apply();
+            startActivity(new Intent(getApplicationContext(), DetectorActivity.class));
         },
                 error -> {
                     hideDialog();
@@ -80,5 +81,10 @@ public class MainActivity extends AppCompatActivity {
     public void hideDialog(){
         binding.progressDialog.setVisibility(View.GONE);
         binding.progressImage.clearAnimation();
+    }
+
+    @Override
+    public void onBackPressed() {
+        finishAffinity();
     }
 }

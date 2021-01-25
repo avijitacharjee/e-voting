@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme.ObjectDetection"
         android:usesCleartextTraffic="true">
         <activity android:name=".AdminDashboard"></activity>
-        <activity android:name=".AdminActivity" />
+        <activity android:name=".AddVoterActivity" />
         <activity android:name=".AdminLoginActivity" />
         <activity android:name=".CandidateInfoActivity" />
         <activity android:name=".DashboardActivity" />

@@ -24,6 +24,7 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
+        android:gravity="center"
         android:layout_height="match_parent"
         android:background="@android:color/black"
         android:orientation="vertical">
@@ -54,6 +55,7 @@
     </RelativeLayout>
 
     <include
+        android:visibility="gone"
         android:id="@+id/bottom_sheet_layout"
         layout="@layout/tfe_od_layout_bottom_sheet" />
 
@@ -98,6 +100,7 @@
 <!--        app:layout_anchor="@id/dummy" />-->
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:visibility="gone"
             android:id="@+id/fab_seach"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

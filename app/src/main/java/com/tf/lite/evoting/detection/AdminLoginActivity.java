@@ -18,7 +18,7 @@ public class AdminLoginActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         binding.submitButton.setOnClickListener(v->{
             if(binding.nidEditText.getText().toString().equals("admin")){
-                startActivity(new Intent(this,AdminActivity.class));
+                startActivity(new Intent(this,AdminDashboard.class));
             }
             else{
                 Toast.makeText(this,"Wrong password",Toast.LENGTH_LONG).show();

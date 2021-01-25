@@ -16,8 +16,14 @@ public class AdminDashboard extends AppCompatActivity {
         setContentView(binding.getRoot());
         binding.textView.setOnClickListener(v->{
             Intent intent = new Intent(this,DetectorActivity.class);
-            intent.putExtra("add_face",true);
+            getSharedPreferences(Constants.SHARED_PREFERENCES_NAME,MODE_PRIVATE).edit().putBoolean("add_face",true).apply();
             startActivity(intent);
         });
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        startActivity(new Intent(this,AdminLoginActivity.class));
     }
 }

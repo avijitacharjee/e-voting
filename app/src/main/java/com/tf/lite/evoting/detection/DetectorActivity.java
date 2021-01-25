@@ -18,6 +18,7 @@ package com.tf.lite.evoting.detection;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Canvas;
@@ -30,6 +31,7 @@ import android.graphics.Typeface;
 import android.hardware.camera2.CameraCharacteristics;
 import android.media.ImageReader.OnImageAvailableListener;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Size;
 import android.util.TypedValue;
@@ -61,6 +63,10 @@ import com.tf.lite.evoting.detection.env.Logger;
 import com.tf.lite.evoting.detection.tflite.SimilarityClassifier;
 import com.tf.lite.evoting.detection.tflite.TFLiteObjectDetectionAPIModel;
 import com.tf.lite.evoting.detection.tracking.MultiBoxTracker;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * An activity that uses a TensorFlowMultiBoxDetector and ObjectTracker to detect and then track
@@ -131,12 +137,17 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
     private FloatingActionButton fabAdd;
 
     // private HashMap<String, Classifier.Recognition> knownFaces = new HashMap<>();
+    private boolean add_face;
 
+    //User info
+    String name;
 
+    //Threading
+    Handler handler;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        handler = new Handler();
         fabAdd = findViewById(R.id.fab_add);
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,9 +168,21 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
         FaceDetector detector = FaceDetection.getClient(options);
 
         faceDetector = detector;
-
+        add_face = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME,MODE_PRIVATE).getBoolean("add_face",true);
+        if(add_face){
+            setupAddFace();
+        }
+        else {
+            setupRecognizeFace();
+        }
         //checkWritePermission();
 
+    }
+    private void setupAddFace(){
+
+    }
+    private void setupRecognizeFace(){
+        fabAdd.hide();
     }
 
     private void onAddClick() {
@@ -187,14 +210,14 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                             TF_OD_API_LABELS_FILE,
                             TF_OD_API_INPUT_SIZE,
                             TF_OD_API_IS_QUANTIZED);
-            classifier.register("bolod",
-                    new Gson().fromJson(getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE).
-                                    getString("face", ""),
-                            SimilarityClassifier.Recognition.class
-                    )
-            );
+            if (!add_face){
+                JSONArray jsonArray = new JSONArray(getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE).getString("user", ""));
+                String face_info = jsonArray.getJSONObject(0).getString("face_info");
+                name = jsonArray.getJSONObject(0).getString("name");
+                classifier.register(name, new Gson().fromJson(face_info, SimilarityClassifier.Recognition.class));
+            }
             //cropSize = TF_OD_API_INPUT_SIZE;
-        } catch (final IOException e) {
+        } catch (final IOException | JSONException e) {
             e.printStackTrace();
             LOGGER.e(e, "Exception initializing classifier!");
             Toast toast =
@@ -415,8 +438,8 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
                 //classifier.register(name, rec);
                 getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE).edit().putString("face", new Gson().toJson(rec)).commit();
                 //knownFaces.put(name, rec);
-
                 dlg.dismiss();
+                startActivity(new Intent(DetectorActivity.this, AddVoterActivity.class));
             }
         });
         builder.setView(dialogLayout);
@@ -559,6 +582,12 @@ public class DetectorActivity extends CameraActivity implements OnImageAvailable
 
                         confidence = conf;
                         label = result.getTitle();
+                        if(add_face){
+                        }else {
+                            if(label.equals(name)){
+                                startActivity(new Intent(DetectorActivity.this,DashboardActivity.class));
+                            }
+                        }
                         //TODO result
                         if (result.getId().equals("0")) {
                             color = Color.GREEN;

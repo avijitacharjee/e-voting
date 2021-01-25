@@ -35,4 +35,10 @@ public class DashboardActivity extends AppCompatActivity {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        startActivity(new Intent(this,MainActivity.class));
+    }
 }

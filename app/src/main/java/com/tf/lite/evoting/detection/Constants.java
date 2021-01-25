@@ -5,5 +5,5 @@ package com.tf.lite.evoting.detection;
  * Email: avijitach@gmail.com.
  */
 class Constants {
-    public static final String SHARED_PREFERENCES_NAME = "a";
+    public static final String SHARED_PREFERENCES_NAME = "app";
 }
