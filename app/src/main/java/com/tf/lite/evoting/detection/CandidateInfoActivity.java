@@ -2,6 +2,7 @@ package com.tf.lite.evoting.detection;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Process;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -32,6 +33,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class CandidateInfoActivity extends AppCompatActivity {
     ActivityCandidateInfoBinding binding;
@@ -76,6 +78,8 @@ public class CandidateInfoActivity extends AppCompatActivity {
             String s = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE).getString("user", "");
             JSONArray jsonArray = new JSONArray(s);
             voted = jsonArray.getJSONObject(0).getString("voted");
+            int id = Integer.parseInt(jsonArray.getJSONObject(0).getString("id"));
+            binding.votingCenter.setText("Voting center no: "+(id%3+1));
         } catch (Exception e) {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
@@ -130,6 +134,11 @@ public class CandidateInfoActivity extends AppCompatActivity {
 
             }
         });
+        /*Random random = new Random();
+        int max =3;
+        int min = 1;
+        int voteCenter = random.nextInt(max - min + 1) + min;
+        binding.votingCenter.setText("Voting center no: "+voteCenter);*/
     }
 
     private void biometricAuth() {
