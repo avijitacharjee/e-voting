@@ -4,11 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class MainAdminActivity extends AppCompatActivity {
+import com.tf.lite.evoting.detection.databinding.ActivityMainAdminBinding;
 
+public class MainAdminActivity extends AppCompatActivity {
+    ActivityMainAdminBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_admin);
+        binding= ActivityMainAdminBinding.inflate(getLayoutInflater(),null,false);
+        setContentView(binding.getRoot());
     }
 }
