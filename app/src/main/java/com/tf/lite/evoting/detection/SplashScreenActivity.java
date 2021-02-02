@@ -7,13 +7,16 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import com.tf.lite.evoting.detection.R;
+import com.tf.lite.evoting.detection.databinding.ActivitySplashScreenBinding;
 
 public class SplashScreenActivity extends AppCompatActivity {
+    ActivitySplashScreenBinding binding;
     Handler handler = new Handler();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash_screen);
+        binding = ActivitySplashScreenBinding.inflate(getLayoutInflater(),null,false);
+        setContentView(binding.getRoot());
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
