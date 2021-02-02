@@ -1,6 +1,7 @@
 package com.tf.lite.evoting.detection;
 
 import android.content.Intent;
+import android.hardware.biometrics.BiometricPrompt;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.an.biometric.BiometricCallback;
+import com.an.biometric.BiometricManager;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -36,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
         binding.adminLogin.setOnClickListener(v -> {
             startActivity(new Intent(this, AdminLoginActivity.class));
         });
+
     }
 
     public void v() {
@@ -87,4 +91,5 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         finishAffinity();
     }
+
 }

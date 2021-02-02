@@ -9,6 +9,9 @@
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
 
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher_voting"
@@ -17,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme.ObjectDetection"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AdminDashboard"></activity>
+        <activity android:name=".MainAdminActivity"></activity>
+        <activity android:name=".AdminDashboard" />
         <activity android:name=".AddVoterActivity" />
         <activity android:name=".AdminLoginActivity" />
         <activity android:name=".CandidateInfoActivity" />
@@ -33,7 +37,7 @@
         <activity
             android:name=".DetectorActivity"
             android:label="@string/tfe_od_app_name"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

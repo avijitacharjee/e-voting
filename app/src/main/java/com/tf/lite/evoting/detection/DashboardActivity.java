@@ -22,7 +22,7 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(new Intent(this, CandidateInfoActivity.class));
         });
         try {
-            String s = getSharedPreferences("app",MODE_PRIVATE).getString("user","");
+            String s = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME,MODE_PRIVATE).getString("user","");
             JSONArray jsonArray = new JSONArray(s);
             binding.nameTextView.setText(jsonArray.getJSONObject(0).getString("name"));
             binding.fathersTextView.setText(jsonArray.getJSONObject(0).getString("father"));

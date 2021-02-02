@@ -2,6 +2,8 @@ package com.tf.lite.evoting.detection;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -28,10 +30,27 @@ public class AddVoterActivity extends AppCompatActivity {
             v();
         });
     }
+    public void showDialog(){
+        binding.progressDialog.setVisibility(View.VISIBLE);
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                binding.progressImage.animate().rotationBy(360).withEndAction(this).setDuration(1500).setInterpolator(new LinearInterpolator()).start();
+            }
+        };
+
+        binding.progressImage.animate().rotationBy(360).withEndAction(runnable).setDuration(1500).setInterpolator(new LinearInterpolator()).start();
+    }
+    public void hideDialog(){
+        binding.progressDialog.setVisibility(View.GONE);
+        binding.progressImage.clearAnimation();
+    }
     public void v() {
+        showDialog();
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         String url = "https://onlinevotingdipta.000webhostapp.com/api.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
+            hideDialog();
             if(response.contains("success")){
                 Toast.makeText(this, "Successfully added", Toast.LENGTH_SHORT).show();
             }
@@ -40,6 +59,7 @@ public class AddVoterActivity extends AppCompatActivity {
             }
         },
                 error -> {
+            hideDialog();
                     Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show();
                 }) {
             @Override
