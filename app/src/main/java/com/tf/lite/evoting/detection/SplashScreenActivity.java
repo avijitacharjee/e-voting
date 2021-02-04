@@ -17,11 +17,6 @@ public class SplashScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivitySplashScreenBinding.inflate(getLayoutInflater(),null,false);
         setContentView(binding.getRoot());
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(SplashScreenActivity.this,MainActivity.class));
-            }
-        },500);
+        handler.postDelayed(() -> startActivity(new Intent(SplashScreenActivity.this,MainActivity.class)),500);
     }
 }
