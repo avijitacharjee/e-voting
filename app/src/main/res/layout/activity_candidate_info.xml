@@ -52,15 +52,16 @@
 
                 <ImageView
                     android:layout_width="50dp"
+                    android:tint="#A027B0"
                     android:layout_height="50dp"
-                    android:src="@mipmap/ic_obama" />
+                    android:src="@drawable/ic_baseline_face_24" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="  Barak Obama"
+                    android:text="Rahim"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -92,15 +93,16 @@
 
                 <ImageView
                     android:layout_width="50dp"
+                    android:tint="#505050"
                     android:layout_height="50dp"
-                    android:src="@mipmap/ic_trump" />
+                    android:src="@drawable/ic_baseline_face_24" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="  Donult trump"
+                    android:text="Karim"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
@@ -131,14 +133,15 @@
                 <ImageView
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:src="@mipmap/ic_biden" />
+                    android:tint="@color/black"
+                    android:src="@drawable/ic_baseline_face_24" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:padding="10dp"
-                    android:text="  Joe Biden      "
+                    android:text="Jasim"
                     android:textColor="@color/black"
                     android:textSize="18sp" />
 
