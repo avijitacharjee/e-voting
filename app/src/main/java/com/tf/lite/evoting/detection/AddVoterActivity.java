@@ -78,6 +78,7 @@ public class AddVoterActivity extends AppCompatActivity {
                 params.put("nid", binding.nidEditText.getText().toString());
                 params.put("driving_licence", binding.drivingLicenceEditText.getText().toString());
                 params.put("face_info", getSharedPreferences(Constants.SHARED_PREFERENCES_NAME,MODE_PRIVATE).getString("face",""));
+                params.put("center", binding.votingCenter.getText().toString());
                 return params;
             }
         };

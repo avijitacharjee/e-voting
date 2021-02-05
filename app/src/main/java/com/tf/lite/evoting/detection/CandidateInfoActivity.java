@@ -28,8 +28,11 @@ import com.google.firebase.database.ValueEventListener;
 import com.tf.lite.evoting.detection.databinding.ActivityCandidateInfoBinding;
 
 import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -79,7 +82,8 @@ public class CandidateInfoActivity extends AppCompatActivity {
             JSONArray jsonArray = new JSONArray(s);
             voted = jsonArray.getJSONObject(0).getString("voted");
             int id = Integer.parseInt(jsonArray.getJSONObject(0).getString("id"));
-            binding.votingCenter.setText("Voting center no: "+(id%3+1));
+            String center = jsonArray.getJSONObject(0).getString("center");
+            binding.votingCenter.setText("Voting center no: "+center);
         } catch (Exception e) {
             Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
         }
@@ -100,7 +104,7 @@ public class CandidateInfoActivity extends AppCompatActivity {
             binding.submit.setText("Thanks for your vote.");
             binding.submit.setGravity(Gravity.CENTER_HORIZONTAL);
         }
-
+        q();
         obama.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -213,17 +217,7 @@ public class CandidateInfoActivity extends AppCompatActivity {
                  * When the fingerprint is has been successfully matched with one of the fingerprints
                  * registered on the device, then this callback will be triggered.
                  */
-                switch (binding.spinner.getSelectedItemPosition()) {
-                    case 1:
-                        obama.setValue((Integer.parseInt(binding.obamaCount.getText().toString()) + 1) + "");
-                        break;
-                    case 2:
-                        trump.setValue((Integer.parseInt(binding.trumpCount.getText().toString()) + 1) + "");
-                        break;
-                    case 3:
-                        biden.setValue((Integer.parseInt(binding.bidenCount.getText().toString()) + 1) + "");
-                        break;
-                }
+
                 //Toast.makeText(CandidateInfoActivity.this, "Your voting was successful.\nThanks for your precious vote..", Toast.LENGTH_LONG).show();
                 v();
             }
@@ -254,7 +248,69 @@ public class CandidateInfoActivity extends AppCompatActivity {
         biometricBuilder.build().authenticate(biometricCallback);
 
     }
+    public void q(){
+        showDialog();
+        try {
+            String s = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE).getString("user", "");
+            JSONArray jsonArray = new JSONArray(s);
+            id = jsonArray.getJSONObject(0).getString("id");
+        } catch (Exception e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+        RequestQueue requestQueue = Volley.newRequestQueue(CandidateInfoActivity.this);
+        String url = "https://onlinevotingdipta.000webhostapp.com/api.php";
+        String finalId = id;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
+            try {
+                JSONArray jsonArray = new JSONArray(response);
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                int hf=Integer.parseInt(jsonObject.getString("hf"));
+                int mf=Integer.parseInt(jsonObject.getString("mf"));
+                int ht=Integer.parseInt(jsonObject.getString("ht"));
+                int mt=Integer.parseInt(jsonObject.getString("mt"));
+                final Calendar fromCalendar = Calendar.getInstance();
+                fromCalendar.set(Calendar.HOUR_OF_DAY,hf);
+                fromCalendar.set(Calendar.MINUTE,mf);
 
+                final Calendar toCalendar = Calendar.getInstance();
+                toCalendar.set(Calendar.HOUR_OF_DAY,ht);
+                toCalendar.set(Calendar.MINUTE,mt);
+                if(!(0==mf && 0==ht && 0 == mt && mt==0)){
+                    if(!(Calendar.getInstance().getTimeInMillis()>fromCalendar.getTimeInMillis() && Calendar.getInstance().getTimeInMillis()<toCalendar.getTimeInMillis())){
+                        binding.bidenCount.setVisibility(View.VISIBLE);
+                        binding.obamaCount.setVisibility(View.VISIBLE);
+                        binding.trumpCount.setVisibility(View.VISIBLE);
+                        hideDialog();
+                        return;
+                    }else {
+                        binding.bidenCount.setVisibility(View.INVISIBLE);
+                        binding.obamaCount.setVisibility(View.INVISIBLE);
+                        binding.trumpCount.setVisibility(View.INVISIBLE);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            hideDialog();
+        },
+                error -> {
+                    hideDialog();
+                    Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show();
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return super.getHeaders();
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("times", "abcd");
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
     public void v() {
         showDialog();
         try {
@@ -268,12 +324,120 @@ public class CandidateInfoActivity extends AppCompatActivity {
         String url = "https://onlinevotingdipta.000webhostapp.com/api.php";
         String finalId = id;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
+            try {
+                JSONArray jsonArray = new JSONArray(response);
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                int hf=Integer.parseInt(jsonObject.getString("hf"));
+                int mf=Integer.parseInt(jsonObject.getString("mf"));
+                int ht=Integer.parseInt(jsonObject.getString("ht"));
+                int mt=Integer.parseInt(jsonObject.getString("mt"));
+                final Calendar fromCalendar = Calendar.getInstance();
+                fromCalendar.set(Calendar.HOUR_OF_DAY,hf);
+                fromCalendar.set(Calendar.MINUTE,mf);
+
+                final Calendar toCalendar = Calendar.getInstance();
+                toCalendar.set(Calendar.HOUR_OF_DAY,ht);
+                toCalendar.set(Calendar.MINUTE,mt);
+                if(!(0==mf && 0==ht && 0 == mt && mt==0)){
+                    if(!(Calendar.getInstance().getTimeInMillis()>fromCalendar.getTimeInMillis() && Calendar.getInstance().getTimeInMillis()<toCalendar.getTimeInMillis())){
+                        Toast.makeText(this, "You can't vote now", Toast.LENGTH_SHORT).show();
+                        binding.bidenCount.setVisibility(View.VISIBLE);
+                        binding.obamaCount.setVisibility(View.VISIBLE);
+                        binding.trumpCount.setVisibility(View.VISIBLE);
+                        hideDialog();
+                        return;
+                    }else {
+                        binding.bidenCount.setVisibility(View.INVISIBLE);
+                        binding.obamaCount.setVisibility(View.INVISIBLE);
+                        binding.trumpCount.setVisibility(View.INVISIBLE);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            updateVoted();
+
+        },
+                error -> {
+                    hideDialog();
+                    Toast.makeText(this, error.toString(), Toast.LENGTH_SHORT).show();
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return super.getHeaders();
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("times", "abcd");
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
+    }
+    private void updateVoted(){
+        //showDialog();
+        try {
+            String s = getSharedPreferences(Constants.SHARED_PREFERENCES_NAME, MODE_PRIVATE).getString("user", "");
+            JSONArray jsonArray = new JSONArray(s);
+            id = jsonArray.getJSONObject(0).getString("id");
+        } catch (Exception e) {
+            Toast.makeText(this, e.toString(), Toast.LENGTH_SHORT).show();
+        }
+        RequestQueue requestQueue = Volley.newRequestQueue(CandidateInfoActivity.this);
+        String url = "https://onlinevotingdipta.000webhostapp.com/api.php";
+        String finalId = id;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
+            try {
+                JSONArray jsonArray = new JSONArray(response);
+                JSONObject jsonObject = jsonArray.getJSONObject(0);
+                int hf=Integer.parseInt(jsonObject.getString("hf"));
+                int mf=Integer.parseInt(jsonObject.getString("mf"));
+                int ht=Integer.parseInt(jsonObject.getString("ht"));
+                int mt=Integer.parseInt(jsonObject.getString("mt"));
+                final Calendar fromCalendar = Calendar.getInstance();
+                fromCalendar.set(Calendar.HOUR_OF_DAY,hf);
+                fromCalendar.set(Calendar.MINUTE,mf);
+
+                final Calendar toCalendar = Calendar.getInstance();
+                toCalendar.set(Calendar.HOUR_OF_DAY,ht);
+                toCalendar.set(Calendar.MINUTE,mt);
+                if(!(0==mf && 0==ht && 0 == mt && mt==0)){
+                    if(!(Calendar.getInstance().getTimeInMillis()>fromCalendar.getTimeInMillis() && Calendar.getInstance().getTimeInMillis()<toCalendar.getTimeInMillis())){
+                        Toast.makeText(this, "You can't vote now", Toast.LENGTH_SHORT).show();
+                        binding.bidenCount.setVisibility(View.VISIBLE);
+                        binding.obamaCount.setVisibility(View.VISIBLE);
+                        binding.trumpCount.setVisibility(View.VISIBLE);
+                        hideDialog();
+                        return;
+                    }else {
+                        binding.bidenCount.setVisibility(View.INVISIBLE);
+                        binding.obamaCount.setVisibility(View.INVISIBLE);
+                        binding.trumpCount.setVisibility(View.INVISIBLE);
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             hideDialog();
             voted = "1";
             binding.submit.setOnClickListener(null);
             binding.submit.setText("Thanks for your vote.");
             binding.submit.setGravity(Gravity.CENTER_HORIZONTAL);
             Toast.makeText(CandidateInfoActivity.this, "Your voting was successful.\nThanks for your precious vote..", Toast.LENGTH_LONG).show();
+            switch (binding.spinner.getSelectedItemPosition()) {
+                case 1:
+                    obama.setValue((Integer.parseInt(binding.obamaCount.getText().toString()) + 1) + "");
+                    break;
+                case 2:
+                    trump.setValue((Integer.parseInt(binding.trumpCount.getText().toString()) + 1) + "");
+                    break;
+                case 3:
+                    biden.setValue((Integer.parseInt(binding.bidenCount.getText().toString()) + 1) + "");
+                    break;
+            }
+
         },
                 error -> {
                     hideDialog();

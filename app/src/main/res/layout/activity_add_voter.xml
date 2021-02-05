@@ -116,6 +116,17 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/blackLight" />
 
+            <EditText
+                android:id="@+id/voting_center"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="#05000000"
+                android:hint="Voting center no."
+                android:padding="8dp"
+                android:textColor="@color/black"
+                android:textColorHint="@color/blackLight" />
+
             <TextView
                 android:id="@+id/submit"
                 android:layout_width="wrap_content"
