@@ -68,9 +68,9 @@ public class CandidateInfoActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         candidates.add("--Select your vote--");
-        candidates.add("Barak Obama");
-        candidates.add("Donult Trump");
-        candidates.add("Joe Biden");
+        candidates.add("Rahim");
+        candidates.add("Karim");
+        candidates.add("Jasim");
         //binding.spinner.getBackground().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, candidates);
         binding.spinner.setAdapter(adapter);
@@ -403,7 +403,7 @@ public class CandidateInfoActivity extends AppCompatActivity {
                 final Calendar toCalendar = Calendar.getInstance();
                 toCalendar.set(Calendar.HOUR_OF_DAY,ht);
                 toCalendar.set(Calendar.MINUTE,mt);
-                if(!(0==mf && 0==ht && 0 == mt && mt==0)){
+                if(!(0==mf && 0==hf && 0 == ht && mt==0)){
                     if(!(Calendar.getInstance().getTimeInMillis()>fromCalendar.getTimeInMillis() && Calendar.getInstance().getTimeInMillis()<toCalendar.getTimeInMillis())){
                         Toast.makeText(this, "You can't vote now", Toast.LENGTH_SHORT).show();
                         binding.bidenCount.setVisibility(View.VISIBLE);
