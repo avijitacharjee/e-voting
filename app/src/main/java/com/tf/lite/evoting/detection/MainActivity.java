@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity {
         binding.adminLogin.setOnClickListener(v -> {
             startActivity(new Intent(this, AdminLoginActivity.class));
         });
-
     }
 
     public void v() {
@@ -71,7 +70,8 @@ public class MainActivity extends AppCompatActivity {
         };
         requestQueue.add(stringRequest);
     }
-    public void showDialog(){
+
+    public void showDialog() {
         binding.progressDialog.setVisibility(View.VISIBLE);
         Runnable runnable = new Runnable() {
             @Override
@@ -82,7 +82,8 @@ public class MainActivity extends AppCompatActivity {
 
         binding.progressImage.animate().rotationBy(360).withEndAction(runnable).setDuration(1500).setInterpolator(new LinearInterpolator()).start();
     }
-    public void hideDialog(){
+
+    public void hideDialog() {
         binding.progressDialog.setVisibility(View.GONE);
         binding.progressImage.clearAnimation();
     }

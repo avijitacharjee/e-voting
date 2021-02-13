@@ -46,51 +46,13 @@ import java.util.Map;
 public class MainAdminActivity extends AppCompatActivity {
     private static final String TAG = "MainAdminActivity";
     ActivityMainAdminBinding binding;
-    DatabaseReference obama, trump, biden;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainAdminBinding.inflate(getLayoutInflater(), null, false);
         setContentView(binding.getRoot());
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        obama = database.getReference("obama");
-        trump = database.getReference("trump");
-        biden = database.getReference("biden");
 
-        obama.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                binding.obamaCount.setText(snapshot.getValue(String.class));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        trump.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                binding.trumpCount.setText(snapshot.getValue(String.class));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-        biden.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                binding.bidenCount.setText(snapshot.getValue(String.class));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
         binding.fromTimeButton.setOnClickListener(v -> {
             DialogFragment newFragment = new FromTimePickerFragment(binding);
             newFragment.show(getSupportFragmentManager(), "timePicker");
