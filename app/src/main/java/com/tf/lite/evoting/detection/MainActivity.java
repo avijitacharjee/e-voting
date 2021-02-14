@@ -2,7 +2,9 @@ package com.tf.lite.evoting.detection;
 
 import android.content.Intent;
 import android.hardware.biometrics.BiometricPrompt;
+import android.os.Build;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -39,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
         binding.adminLogin.setOnClickListener(v -> {
             startActivity(new Intent(this, AdminLoginActivity.class));
         });
+        String buttonText = "<html>Showing nearby local taxi drivers &amp; operators.<br /><br /><ul><li>All fares shown are estimates based on price per km.</li><li>It doesn’t include Tolls , Border Taxes.</li><li>It doesn’t include Driver Allowances.</li></ul></html>";
+        //binding.submitButton.setText(getHtml(buttonText));
     }
 
     public void v() {
@@ -92,5 +96,13 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         finishAffinity();
     }
+    private String getHtml(String htmlBody){
+        if(Build.VERSION.SDK_INT>Build.VERSION_CODES.M){
+            return Html.fromHtml(htmlBody,Html.FROM_HTML_MODE_LEGACY).toString();
+        }else {
+            return Html.fromHtml(htmlBody).toString();
+        }
+    }
+
 
 }
