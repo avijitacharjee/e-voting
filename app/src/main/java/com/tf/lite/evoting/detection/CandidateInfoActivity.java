@@ -99,7 +99,7 @@ public class CandidateInfoActivity extends AppCompatActivity {
             trump.setValue("0");
             biden.setValue("0");*/
         });
-        if (voted.equals("1")) {
+        if (!voted.equals("0")) {
             binding.submit.setOnClickListener(null);
             binding.submit.setText("Thanks for your vote.");
             binding.submit.setGravity(Gravity.CENTER_HORIZONTAL);
@@ -452,6 +452,7 @@ public class CandidateInfoActivity extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
                 params.put("update_voted", finalId);
+                params.put("voted_to", binding.spinner.getSelectedItemPosition()+"");
                 return params;
             }
         };

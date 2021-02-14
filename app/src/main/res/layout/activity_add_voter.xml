@@ -116,16 +116,16 @@
                 android:textColor="@color/black"
                 android:textColorHint="@color/blackLight" />
 
-            <EditText
-                android:id="@+id/voting_center"
+            <Spinner
+                android:id="@+id/voting_center_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="#05000000"
-                android:hint="Voting center no."
-                android:padding="8dp"
-                android:textColor="@color/black"
-                android:textColorHint="@color/blackLight" />
+                android:background="@color/blackLight"
+                android:dropDownSelector="@color/white"
+                android:foregroundTint="@color/white"
+                android:padding="6dp"
+                android:spinnerMode="dropdown"  />
 
             <TextView
                 android:id="@+id/submit"

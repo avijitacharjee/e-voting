@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.LinearInterpolator;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,19 +16,29 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.tf.lite.evoting.detection.databinding.ActivityAddVoterBinding;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AddVoterActivity extends AppCompatActivity {
     private static final String TAG = "AdminActivity";
     ActivityAddVoterBinding binding;
+    List<String> centers = Arrays.asList("--Select Voting Center--","1","2","3");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityAddVoterBinding.inflate(getLayoutInflater(),null,false);
         setContentView(binding.getRoot());
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, centers);
+        binding.votingCenterSpinner.setAdapter(adapter);
         binding.submit.setOnClickListener(v->{
-            v();
+            if(binding.votingCenterSpinner.getSelectedItemPosition()>0){
+                v();
+            }else {
+                Toast.makeText(this, "Please select voting center", Toast.LENGTH_SHORT).show();
+            }
         });
     }
     public void showDialog(){
@@ -78,7 +89,7 @@ public class AddVoterActivity extends AppCompatActivity {
                 params.put("nid", binding.nidEditText.getText().toString());
                 params.put("driving_licence", binding.drivingLicenceEditText.getText().toString());
                 params.put("face_info", getSharedPreferences(Constants.SHARED_PREFERENCES_NAME,MODE_PRIVATE).getString("face",""));
-                params.put("center", binding.votingCenter.getText().toString());
+                params.put("center", binding.votingCenterSpinner.getSelectedItemPosition()+"");
                 return params;
             }
         };

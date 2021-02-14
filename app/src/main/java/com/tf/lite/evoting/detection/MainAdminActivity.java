@@ -38,6 +38,10 @@ import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -61,7 +65,55 @@ public class MainAdminActivity extends AppCompatActivity {
             DialogFragment newFragment = new ToTimePickerFragment(binding);
             newFragment.show(getSupportFragmentManager(), "timePicker");
         });
+        getVotingInfo();
+    }
 
+    private void getVotingInfo() {
+        showDialog();
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        String url = "https://onlinevotingdipta.000webhostapp.com/api.php";
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
+            hideDialog();
+            try {
+                JSONArray jsonArray = new JSONArray(response);
+                VoteCount voteCount = new VoteCount(jsonArray);
+                binding.r1.setText(""+voteCount.getR1());
+                binding.r2.setText(""+voteCount.getR2());
+                binding.r3.setText(""+voteCount.getR3());
+
+                binding.k1.setText(""+voteCount.getK1());
+                binding.k2.setText(""+voteCount.getK2());
+                binding.k3.setText(""+voteCount.getK3());
+
+                binding.j1.setText(""+voteCount.getJ1());
+                binding.j2.setText(""+voteCount.getJ2());
+                binding.j3.setText(""+voteCount.getJ3());
+
+                binding.rahimTotal.setText(""+voteCount.rahimTotal());
+                binding.karimTotal.setText(""+voteCount.karimTotal());
+                binding.jasimTotal.setText(""+voteCount.jasimTotal());
+            } catch (Exception e) {
+
+            }
+
+        },
+                error -> {
+                    hideDialog();
+                    Toast.makeText(MainAdminActivity.this, "Failed to load", Toast.LENGTH_SHORT).show();
+                }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                return super.getHeaders();
+            }
+
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("get_all_users", "abcd");
+                return params;
+            }
+        };
+        requestQueue.add(stringRequest);
     }
 
     public static class FromTimePickerFragment extends DialogFragment
@@ -103,7 +155,7 @@ public class MainAdminActivity extends AppCompatActivity {
                 binding.progressDialog.setVisibility(View.GONE);
                 binding.progressImage.clearAnimation();
                 Toast.makeText(view.getContext(), "Successfully updated", Toast.LENGTH_SHORT).show();
-                binding.fromTimeButton.setText("From: \n"+hourOfDay+":"+minute);
+                binding.fromTimeButton.setText("From: \n" + hourOfDay + ":" + minute);
             },
                     error -> {
                         binding.progressDialog.setVisibility(View.GONE);
@@ -131,7 +183,8 @@ public class MainAdminActivity extends AppCompatActivity {
     public static class ToTimePickerFragment extends DialogFragment
             implements TimePickerDialog.OnTimeSetListener {
         ActivityMainAdminBinding binding;
-        public ToTimePickerFragment(ActivityMainAdminBinding binding){
+
+        public ToTimePickerFragment(ActivityMainAdminBinding binding) {
             this.binding = binding;
         }
 
@@ -166,7 +219,7 @@ public class MainAdminActivity extends AppCompatActivity {
                 binding.progressDialog.setVisibility(View.GONE);
                 binding.progressImage.clearAnimation();
                 Toast.makeText(view.getContext(), "Successfully updated", Toast.LENGTH_SHORT).show();
-                binding.toTimeButton.setText("To: \n"+hourOfDay+":"+minute);
+                binding.toTimeButton.setText("To: \n" + hourOfDay + ":" + minute);
             },
                     error -> {
                         binding.progressDialog.setVisibility(View.GONE);
@@ -190,7 +243,8 @@ public class MainAdminActivity extends AppCompatActivity {
             requestQueue.add(stringRequest);
         }
     }
-    public void showDialog(){
+
+    public void showDialog() {
         binding.progressDialog.setVisibility(View.VISIBLE);
         Runnable runnable = new Runnable() {
             @Override
@@ -201,19 +255,20 @@ public class MainAdminActivity extends AppCompatActivity {
 
         binding.progressImage.animate().rotationBy(360).withEndAction(runnable).setDuration(1500).setInterpolator(new LinearInterpolator()).start();
     }
-    public void hideDialog(){
+
+    public void hideDialog() {
         binding.progressDialog.setVisibility(View.GONE);
         binding.progressImage.clearAnimation();
     }
 
-public void setTo(String ht,String mt) {
+    public void setTo(String ht, String mt) {
         showDialog();
         RequestQueue requestQueue = Volley.newRequestQueue(MainAdminActivity.this);
         String url = "https://onlinevotingdipta.000webhostapp.com/api.php";
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, response -> {
             hideDialog();
             Toast.makeText(this, "Successfully updated", Toast.LENGTH_SHORT).show();
-            binding.fromTimeButton.setText("To: \n"+ht+":"+mt);
+            binding.fromTimeButton.setText("To: \n" + ht + ":" + mt);
         },
                 error -> {
                     hideDialog();
@@ -236,4 +291,90 @@ public void setTo(String ht,String mt) {
         requestQueue.add(stringRequest);
     }
 
+    class VoteCount {
+        private JSONArray users;
+        private int data[][] = new int[4][3];
+        VoteCount(JSONArray users) throws JSONException {
+            this.users = users;
+            calculate();
+        }
+        private void calculate() throws JSONException {
+            for (int i=0;i<users.length();i++){
+                if(users.getJSONObject(i).getString("voted").equals("1")){
+                    if(users.getJSONObject(i).getString("center").equals("1")){
+                        data[0][0]++;
+                    }
+                    if(users.getJSONObject(i).getString("center").equals("2")){
+                        data[1][0]++;
+                    }
+                    if(users.getJSONObject(i).getString("center").equals("3")){
+                        data[2][0]++;
+                    }
+                    data[3][0]++;
+                }
+                if(users.getJSONObject(i).getString("voted").equals("2")){
+                    if(users.getJSONObject(i).getString("center").equals("1")){
+                        data[0][1]++;
+                    }
+                    if(users.getJSONObject(i).getString("center").equals("2")){
+                        data[1][1]++;
+                    }
+                    if(users.getJSONObject(i).getString("center").equals("3")){
+                        data[2][1]++;
+                    }
+                    data[3][1]++;
+                }
+                if(users.getJSONObject(i).getString("voted").equals("3")){
+                    if(users.getJSONObject(i).getString("center").equals("1")){
+                        data[0][2]++;
+                    }
+                    if(users.getJSONObject(i).getString("center").equals("2")){
+                        data[1][2]++;
+                    }
+                    if(users.getJSONObject(i).getString("center").equals("3")){
+                        data[2][2]++;
+                    }
+                    data[3][2]++;
+                }
+
+            }
+        }
+        public int getR1(){
+            return data[0][0];
+        }
+        public int getR2(){
+            return data[1][0];
+        }
+        public int getR3(){
+            return data[2][0];
+        }
+        public int getK1(){
+            return data[0][1];
+        }
+        public int getK2(){
+            return data[1][1];
+        }
+        public int getK3(){
+            return data[2][1];
+        }
+        public int getJ1(){
+            return data[0][2];
+        }
+        public int getJ2(){
+            return data[1][2];
+        }
+        public int getJ3(){
+            return data[2][2];
+        }
+        public int rahimTotal(){
+            return data[3][0];
+        }
+        public int karimTotal(){
+            return data[3][1];
+        }
+        public int jasimTotal(){
+            return data[3][2];
+        }
+
+    }
 }
